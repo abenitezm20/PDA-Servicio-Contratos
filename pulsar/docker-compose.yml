@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  pulsar:
+    image: apachepulsar/pulsar:latest
+    container_name: pulsar-standalone
+    ports:
+      - "6650:6650"
+      - "8080:8080"
+    volumes:
+      - ./data:/pulsar/data
+    command: bin/pulsar standalone
+
+# https://pulsar.apache.org/docs/3.1.x/getting-started-docker/
