@@ -1,4 +1,4 @@
-# pda_registry_service
+# pda_servicio_contratos
 Servicio de PDA que se utiliza para el registro de información.
 
 ## debe tener un archivo .env
@@ -13,6 +13,7 @@ docker-compose -f "docker-compose.yml" up
 ## levantar Apache pulsar
 Ingresar a la carpeta ./pulsar y subir el broker a través del docker compose
 ```python
+cd pulsar
 docker-compose -f "docker-compose.yml" up
 ```
 
