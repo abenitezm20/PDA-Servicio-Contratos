@@ -51,12 +51,5 @@ def registrar_propiedad_contratro():
 def registrar_propiedad_contratro_async():
     map_propiedad = MapeadorPropiedadContratosDTOJson()
     arriendo_dto = map_propiedad.externo_a_dto(request.json)
-
-    # comando = ComandoRegistrarArrendamiento(
-    #     propiedad_id=arriendo_dto.propiedad_id,
-    #     numero_contrato=arriendo_dto.numero_contrato,
-    #     fecha_creacion=arriendo_dto.fecha_creacion,
-    #     fecha_actualizacion=arriendo_dto.fecha_actualizacion,)   
-
     Despachador().publicar_comando(arriendo_dto, 'comandos-contrato')
     return Response('{}', status=202, mimetype='application/json')

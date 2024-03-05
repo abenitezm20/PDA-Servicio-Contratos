@@ -23,7 +23,6 @@ class Despachador:
         cliente.close()
 
     def publicar_evento(self, evento, topico):
-        # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del evento
         payload = RegistroArrendamientoPayload(
             propiedad_id=str(evento.propiedad_id),
             numero_contrato=str(evento.numero_contrato),
@@ -35,10 +34,6 @@ class Despachador:
                                AvroSchema(EventoRegistroArrendamientoCreado))
 
     def publicar_comando(self, dto, topico):
-        # TODO Debe existir un forma de crear el Payload en Avro con base al tipo del comando
-        # if isinstance(comando, ComandoRegistrarArrendamiento):
-        #     print('AQUI :)')
-
         payload = ComandoRegistrarArrendamientoPayload(
             propiedad_id=dto.propiedad_id,
             numero_contrato=dto.numero_contrato,
