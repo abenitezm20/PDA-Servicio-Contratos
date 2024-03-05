@@ -10,6 +10,12 @@ el docker ya lee de variables de entorno si y solo si el archivo se llama .env, 
 docker-compose -f "docker-compose.yml" up
 ```
 
+## levantar Apache pulsar
+Ingresar a la carpeta ./pulsar y subir el broker a través del docker compose
+```python
+docker-compose -f "docker-compose.yml" up
+```
+
 ## ejecutar el servidor
 se deben cargar las variables de entorno en el ambiente
 ```python
@@ -20,23 +26,17 @@ Luego se procede a levantar el servidor
 flask --app src/contractual/api run -p 3000
 ```
 
-## endpoint para crear una propiedad
+## endpoint para probar comando y evento al crear un arrendamiento
 
-endpoint: http://localhost:3000/propiedad
+endpoint: http://localhost:3000/async-contrato
 
 tipo: POST
 body
 ```json
 {
-    "coordenadas": "{'lat': 32.23, 'lng': 32.34}",
-    "direccion": "cra 132 N 122 - 22",
-    "fecha_creacion": "2024-02-02 09:02:00",
-    "nombre": "villeta"
+    "propiedad_id": "46",
+    "numero_contrato": "ABCD1234",
+    "fecha_actualizacion": "04/03/2024",
+    "fecha_creacion": "04/03/2024"
 }
 ```
-
-## endpoint para consultar una propiedad a analizar
-
-endpoint: http://localhost:3000/analisis/propiedad/<propiedad_id>
-
-tipo: GET
