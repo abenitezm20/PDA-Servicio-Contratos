@@ -5,7 +5,5 @@ from contractual.seedwork.dominio.eventos import (EventoDominio)
 
 @dataclass
 class PropiedadContratoRegistrado(EventoDominio):
+    id_propiedad: str = None
     numero_contrato: str = None
-    fecha_actualizacion: str = None
-    fecha_creacion: str = None
-    propiedad_id: str = None

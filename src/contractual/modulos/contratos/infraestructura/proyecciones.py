@@ -45,12 +45,10 @@ class ProyeccionRegistrarArrendamiento(ProyeccionArrendamiento):
                               fecha_actualizacion=self.fecha_actualizacion))
         db.commit()
 
-        evento = PropiedadContratoRegistrado(propiedad_id=self.propiedad_id,
-                                             numero_contrato=self.numero_contrato,
-                                             fecha_creacion=self.fecha_creacion,
-                                             fecha_actualizacion=self.fecha_actualizacion)
+        evento = PropiedadContratoRegistrado(id_propiedad=self.propiedad_id,
+                                             numero_contrato=self.numero_contrato,)
         despachador = Despachador()
-        despachador.publicar_evento(evento, 'eventos-contrato')
+        despachador.publicar_evento(evento, 'eventos-contratro-creado')
         print('Proyección de arrendamiento ejecutada!')
 
 

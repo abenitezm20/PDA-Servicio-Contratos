@@ -6,7 +6,7 @@ import traceback
 import uuid
 from datetime import datetime
 from contractual.modulos.contratos.infraestructura.proyecciones import ProyeccionRegistrarArrendamiento
-from contractual.modulos.contratos.infraestructura.schema.v1.eventos import EventoRegistroArrendamientoCreado
+from contractual.modulos.contratos.infraestructura.schema.v1.eventos import EventoContratoCreado
 from contractual.modulos.contratos.infraestructura.schema.v1.comandos import ComandoRegistrarArrendamiento
 from contractual.seedwork.infraestructura import utils
 from contractual.modulos.contratos.aplicacion.comandos.crear_propiedad_contratos import RegistrarPropiedadContratos
@@ -17,8 +17,8 @@ def suscribirse_a_eventos():
     cliente = None
     try:
         cliente = pulsar.Client(f'pulsar://{utils.broker_host()}:6650')
-        consumidor = cliente.subscribe('eventos-contrato', consumer_type=_pulsar.ConsumerType.Shared,
-                                       subscription_name='pda-sub-eventos', schema=AvroSchema(EventoRegistroArrendamientoCreado))
+        consumidor = cliente.subscribe('eventos-contratro-creado', consumer_type=_pulsar.ConsumerType.Shared,
+                                       subscription_name='pda-sub-eventos', schema=AvroSchema(EventoContratoCreado))
 
         while True:
             mensaje = consumidor.receive()

@@ -1,7 +1,7 @@
 import pulsar
 from pulsar.schema import *
 
-from contractual.modulos.contratos.infraestructura.schema.v1.eventos import EventoRegistroArrendamientoCreado, RegistroArrendamientoPayload
+from contractual.modulos.contratos.infraestructura.schema.v1.eventos import EventoContratoCreado, ContratoCreadoPayload
 from contractual.modulos.contratos.infraestructura.schema.v1.comandos import ComandoRegistrarArrendamiento, ComandoCrearContratoPayload
 from contractual.seedwork.infraestructura import utils
 
@@ -23,22 +23,18 @@ class Despachador:
         cliente.close()
 
     def publicar_evento(self, evento, topico):
-        payload = RegistroArrendamientoPayload(
-            propiedad_id=str(evento.propiedad_id),
+        payload = ContratoCreadoPayload(
+            id_propiedad=str(evento.id_propiedad),
             numero_contrato=str(evento.numero_contrato),
-            fecha_actualizacion=str(evento.fecha_actualizacion),
-            fecha_creacion=str(evento.fecha_creacion),
         )
-        evento_integracion = EventoRegistroArrendamientoCreado(data=payload)
+        evento_integracion = EventoContratoCreado(data=payload)
         self._publicar_mensaje(evento_integracion, topico,
-                               AvroSchema(EventoRegistroArrendamientoCreado))
+                               AvroSchema(EventoContratoCreado))
 
     def publicar_comando(self, dto, topico):
         payload = ComandoCrearContratoPayload(
-            propiedad_id=dto.propiedad_id,
+            id_propiedad=dto.propiedad_id,
             numero_contrato=dto.numero_contrato,
-            fecha_actualizacion=dto.fecha_actualizacion,
-            fecha_creacion=dto.fecha_creacion,
         )
 
         comando_integracion = ComandoRegistrarArrendamiento(data=payload)
