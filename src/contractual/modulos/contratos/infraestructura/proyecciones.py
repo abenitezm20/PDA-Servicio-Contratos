@@ -34,7 +34,7 @@ class ProyeccionRegistrarArrendamiento(ProyeccionArrendamiento):
             return
 
         print('Ejecutando proyección de arrendamiento...')
-        time.sleep(10)
+        time.sleep(5)
         fabrica_repositorio = FabricaRepositorio()
         repositorio = fabrica_repositorio.crear_objeto(
             RepositorioPropiedadesContratosSQL.__class__)

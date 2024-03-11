@@ -2,7 +2,7 @@ import pulsar
 from pulsar.schema import *
 
 from contractual.modulos.contratos.infraestructura.schema.v1.eventos import EventoRegistroArrendamientoCreado, RegistroArrendamientoPayload
-from contractual.modulos.contratos.infraestructura.schema.v1.comandos import ComandoRegistrarArrendamiento, ComandoRegistrarArrendamientoPayload
+from contractual.modulos.contratos.infraestructura.schema.v1.comandos import ComandoRegistrarArrendamiento, ComandoCrearContratoPayload
 from contractual.seedwork.infraestructura import utils
 
 import datetime
@@ -34,7 +34,7 @@ class Despachador:
                                AvroSchema(EventoRegistroArrendamientoCreado))
 
     def publicar_comando(self, dto, topico):
-        payload = ComandoRegistrarArrendamientoPayload(
+        payload = ComandoCrearContratoPayload(
             propiedad_id=dto.propiedad_id,
             numero_contrato=dto.numero_contrato,
             fecha_actualizacion=dto.fecha_actualizacion,

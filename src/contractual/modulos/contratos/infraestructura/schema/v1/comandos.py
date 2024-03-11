@@ -4,12 +4,8 @@ from contractual.seedwork.infraestructura.schema.v1.comandos import (
     ComandoIntegracion)
 
 
-class ComandoRegistrarArrendamientoPayload(Record):
-    propiedad_id = String()
-    numero_contrato = String()
-    fecha_actualizacion = String()
-    fecha_creacion = String()
-
+class ComandoCrearContratoPayload(Record):
+    id_propiedad = String()
 
 class ComandoRegistrarArrendamiento(ComandoIntegracion):
-    data = ComandoRegistrarArrendamientoPayload()
+    data = ComandoCrearContratoPayload()
