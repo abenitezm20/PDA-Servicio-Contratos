@@ -1,5 +1,5 @@
 from contractual.modulos.contratos.dominio.entidades import PropiedadContrato
-from contractual.modulos.contratos.dominio.eventos import PropiedadContratoRegistrado
+from contractual.modulos.contratos.dominio.eventos import PropiedadContratoRegistrado, PropiedadContratoReversado
 from contractual.modulos.contratos.infraestructura.fabricas import FabricaRepositorio
 from contractual.modulos.contratos.infraestructura.repositorios import RepositorioPropiedadesContratosSQL
 from contractual.seedwork.infraestructura.proyecciones import Proyeccion, ProyeccionHandler
@@ -32,32 +32,39 @@ class ProyeccionRegistrarArrendamiento(ProyeccionArrendamiento):
         if not db:
             print('ERROR: DB del app no puede ser nula')
             return
-        
+
         fabrica_repositorio = FabricaRepositorio()
         repositorio = fabrica_repositorio.crear_objeto(
             RepositorioPropiedadesContratosSQL.__class__)
+        despachador = Despachador()
 
         if self.operacion == self.DELETE:
             print('Ejecutando proyección compensación de arrendamiento...')
             repositorio.eliminar(self.propiedad_id)
             db.commit()
+
+            evento = PropiedadContratoReversado(
+                id_propiedad=self.propiedad_id,)
+            despachador.publicar_compensacion(
+                evento, 'eventos-contratro-fallido')
+            print('Proyección de compensación arrendamiento ejecutada!')
             return
 
-        print('Ejecutando proyección de arrendamiento...')
-        time.sleep(5)
-        
-        repositorio.agregar(
-            PropiedadContrato(propiedad_id=self.propiedad_id,
-                              numero_contrato=self.numero_contrato,
-                              fecha_creacion=self.fecha_creacion,
-                              fecha_actualizacion=self.fecha_actualizacion))
-        db.commit()
+        elif self.operacion == self.ADD:
+            print('Ejecutando proyección de arrendamiento...')
+            time.sleep(5)
 
-        evento = PropiedadContratoRegistrado(id_propiedad=self.propiedad_id,
-                                             numero_contrato=self.numero_contrato,)
-        despachador = Despachador()
-        despachador.publicar_evento(evento, 'eventos-contratro-creado')
-        print('Proyección de arrendamiento ejecutada!')
+            repositorio.agregar(
+                PropiedadContrato(propiedad_id=self.propiedad_id,
+                                  numero_contrato=self.numero_contrato,
+                                  fecha_creacion=self.fecha_creacion,
+                                  fecha_actualizacion=self.fecha_actualizacion))
+            db.commit()
+
+            evento = PropiedadContratoRegistrado(id_propiedad=self.propiedad_id,
+                                                 numero_contrato=self.numero_contrato,)
+            despachador.publicar_evento(evento, 'eventos-contratro-creado')
+            print('Proyección de arrendamiento ejecutada!')
 
 
 class ProyeccionReservaHandler(ProyeccionHandler):

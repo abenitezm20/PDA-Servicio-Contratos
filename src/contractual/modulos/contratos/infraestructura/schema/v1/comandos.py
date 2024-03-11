@@ -7,11 +7,14 @@ from contractual.seedwork.infraestructura.schema.v1.comandos import (
 class ComandoCrearContratoPayload(Record):
     id_propiedad = String()
 
+
 class ComandoRegistrarArrendamiento(ComandoIntegracion):
     data = ComandoCrearContratoPayload()
 
-class ComandoCrearContratoFallidoPayload(Record):
+
+class CreacionContratoFallidoPayload(Record):
     id_propiedad = String()
 
+
 class ComandoCrearContratoFallido(ComandoIntegracion):
-    data = ComandoCrearContratoFallidoPayload()
+    data = CreacionContratoFallidoPayload()

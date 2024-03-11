@@ -7,3 +7,7 @@ from contractual.seedwork.dominio.eventos import (EventoDominio)
 class PropiedadContratoRegistrado(EventoDominio):
     id_propiedad: str = None
     numero_contrato: str = None
+
+@dataclass
+class PropiedadContratoReversado(EventoDominio):
+    id_propiedad: str = None

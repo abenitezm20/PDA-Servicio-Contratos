@@ -2,7 +2,7 @@ import pulsar
 from pulsar.schema import *
 
 from contractual.modulos.contratos.infraestructura.schema.v1.eventos import EventoContratoCreado, ContratoCreadoPayload
-from contractual.modulos.contratos.infraestructura.schema.v1.comandos import ComandoCrearContratoFallido, ComandoCrearContratoFallidoPayload
+from contractual.modulos.contratos.infraestructura.schema.v1.comandos import ComandoCrearContratoFallido, CreacionContratoFallidoPayload, ComandoCrearContratoPayload, ComandoRegistrarArrendamiento
 from contractual.seedwork.infraestructura import utils
 
 import datetime
@@ -32,11 +32,20 @@ class Despachador:
                                AvroSchema(EventoContratoCreado))
 
     def publicar_comando(self, dto, topico):
-        payload = ComandoCrearContratoFallidoPayload(
-            id_propiedad=dto.propiedad_id,
+        payload = ComandoCrearContratoPayload(
+            propiedad_id=dto.propiedad_id,
             numero_contrato=dto.numero_contrato,
         )
 
         comando_integracion = ComandoCrearContratoFallido(data=payload)
         self._publicar_mensaje(comando_integracion, topico,
+                               AvroSchema(ComandoRegistrarArrendamiento))
+
+    def publicar_compensacion(self, dto, topico):
+        payload = CreacionContratoFallidoPayload(
+            id_propiedad=dto.id_propiedad,
+        )
+
+        comando_compensacion = ComandoCrearContratoFallido(data=payload)
+        self._publicar_mensaje(comando_compensacion, topico,
                                AvroSchema(ComandoCrearContratoFallido))
