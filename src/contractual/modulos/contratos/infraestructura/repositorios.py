@@ -22,7 +22,11 @@ class RepositorioPropiedadesContratosSQL(RepositorioPropiedadesContratos):
         return self._fabrica_propiedad_contratos.crear_objeto(reserva_dto, MapeadorPropiedadContratos())
 
     def obtener_todos(self) -> list[PropiedadContrato]:
-        ...
+        contratos = db_session.query(PropiedadContratoDTO).all()
+        resultado = []
+        for contrato in contratos:
+            resultado.append(self._fabrica_propiedad_contratos.crear_objeto(contrato, MapeadorPropiedadContratos()))
+        return resultado
 
     def agregar(self, propiedad: PropiedadContrato):
         propiedad_dto = self._fabrica_propiedad_contratos.crear_objeto(

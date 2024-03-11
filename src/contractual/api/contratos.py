@@ -1,5 +1,5 @@
 from flask import Blueprint, Response, request, session
-from contractual.modulos.contratos.aplicacion.queries.obtener_contratos import ObtenerPropiedadContratos
+from contractual.modulos.contratos.aplicacion.queries.obtener_contratos import ObtenerContratos, ObtenerPropiedadContratos
 from contractual.modulos.contratos.aplicacion.comandos.crear_propiedad_contratos import RegistrarPropiedadContratos
 from contractual.modulos.contratos.aplicacion.mapeadores import MapeadorPropiedadContratosDTOJson
 from contractual.seedwork.aplicacion.queries import ejecutar_query
@@ -25,6 +25,15 @@ def obtener_propiedad_contratro(id=None):
         return map_propiedad.dto_a_externo(query_resultado.resultado)
     else:
         return Response({'message': 'GET'})
+
+@ab.route('/contratos', methods=['GET'])
+def obtener_contratos():
+    map_propiedad = MapeadorPropiedadContratosDTOJson()
+    query_resultado = ejecutar_query(ObtenerContratos())
+    resultados = []
+    for contrato in query_resultado.resultado:
+        resultados.append(map_propiedad.dto_a_externo(contrato))
+    return resultados
 
 
 @ab.route('/contrato', methods=['POST'])

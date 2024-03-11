@@ -25,3 +25,27 @@ class ObtenerPropiedadContratosHandler(PropiedadContratosQueryBaseHandler):
 def ejecutar_query_obtener_propiedad(query: ObtenerPropiedadContratos):
     handler = ObtenerPropiedadContratosHandler()
     return handler.handle(query)
+
+
+@dataclass
+class ObtenerContratos(Query):
+    pass
+
+
+class ObtenerContratosHandler(PropiedadContratosQueryBaseHandler):
+
+    def handle(self, query: Query) -> QueryResultado:
+        repositorio = self.fabrica_repositorio.crear_objeto(
+            RepositorioPropiedadesContratosSQL.__class__)
+        tmp = repositorio.obtener_todos()
+        resultado = []
+        for i in tmp:
+            resultado.append(self.fabrica_propiedad_contratos.crear_objeto(
+                i, MapeadorPropiedadContrato()))
+        return QueryResultado(resultado=resultado)
+
+
+@query.register(Query)
+def ejecutar_query_obtener_contratos(query: Query):
+    handler = ObtenerContratosHandler()
+    return handler.handle(query)
