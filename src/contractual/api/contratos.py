@@ -6,7 +6,7 @@ from contractual.seedwork.aplicacion.queries import ejecutar_query
 from contractual.seedwork.aplicacion.comandos import ejecutar_comando
 
 from contractual.modulos.contratos.infraestructura.despachadores import Despachador
-from contractual.modulos.contratos.infraestructura.schema.v1.comandos import ComandoRegistrarArrendamiento
+from contractual.modulos.contratos.infraestructura.schema.v1.comandos import ComandoCrearContratoFallido
 
 
 ab = Blueprint('contratos', __name__)

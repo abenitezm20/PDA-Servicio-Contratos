@@ -9,3 +9,9 @@ class ComandoCrearContratoPayload(Record):
 
 class ComandoRegistrarArrendamiento(ComandoIntegracion):
     data = ComandoCrearContratoPayload()
+
+class ComandoCrearContratoFallidoPayload(Record):
+    id_propiedad = String()
+
+class ComandoCrearContratoFallido(ComandoIntegracion):
+    data = ComandoCrearContratoFallidoPayload()

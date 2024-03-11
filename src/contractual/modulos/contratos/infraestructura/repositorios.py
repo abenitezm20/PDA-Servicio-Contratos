@@ -33,4 +33,7 @@ class RepositorioPropiedadesContratosSQL(RepositorioPropiedadesContratos):
         ...
 
     def eliminar(self, propiedad_id: UUID):
-        ...
+        print(f'Eliminando propiedad con id: {propiedad_id}')
+        contrato = db_session.query(
+            PropiedadContratoDTO).filter_by(propiedad_id=str(propiedad_id)).one()
+        db_session.delete(contrato)

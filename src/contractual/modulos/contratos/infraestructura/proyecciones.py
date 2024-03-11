@@ -32,12 +32,20 @@ class ProyeccionRegistrarArrendamiento(ProyeccionArrendamiento):
         if not db:
             print('ERROR: DB del app no puede ser nula')
             return
-
-        print('Ejecutando proyección de arrendamiento...')
-        time.sleep(5)
+        
         fabrica_repositorio = FabricaRepositorio()
         repositorio = fabrica_repositorio.crear_objeto(
             RepositorioPropiedadesContratosSQL.__class__)
+
+        if self.operacion == self.DELETE:
+            print('Ejecutando proyección compensación de arrendamiento...')
+            repositorio.eliminar(self.propiedad_id)
+            db.commit()
+            return
+
+        print('Ejecutando proyección de arrendamiento...')
+        time.sleep(5)
+        
         repositorio.agregar(
             PropiedadContrato(propiedad_id=self.propiedad_id,
                               numero_contrato=self.numero_contrato,
